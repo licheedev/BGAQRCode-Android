@@ -8,8 +8,22 @@ import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
-
 public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback {
+
+    /**
+     * 自动对焦成功后，再次对焦的延迟
+     */
+    public static final long DEFAULT_AUTO_FOCUS_SUCCESS_DELAY = 1500L;
+
+    /**
+     * 自动对焦失败后，再次对焦的延迟
+     */
+    public static final long DEFAULT_AUTO_FOCUS_FAILURE_DELAY = 500L;
+
+    private long mAutoFocusSuccessDelay = DEFAULT_AUTO_FOCUS_SUCCESS_DELAY;
+
+    private long mAutoFocusFailureDelay = DEFAULT_AUTO_FOCUS_FAILURE_DELAY;
+
     private static final String TAG = CameraPreview.class.getSimpleName();
     private Camera mCamera;
     private boolean mPreviewing = true;
@@ -107,7 +121,8 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
     public void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         int width = getDefaultSize(getSuggestedMinimumWidth(), widthMeasureSpec);
         int height = getDefaultSize(getSuggestedMinimumHeight(), heightMeasureSpec);
-        if (mCameraConfigurationManager != null && mCameraConfigurationManager.getCameraResolution() != null) {
+        if (mCameraConfigurationManager != null
+            && mCameraConfigurationManager.getCameraResolution() != null) {
             Point cameraResolution = mCameraConfigurationManager.getCameraResolution();
             // 取出来的cameraResolution高宽值与屏幕的高宽顺序是相反的
             int cameraPreviewWidth = cameraResolution.x;
@@ -120,12 +135,13 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
                 height = (int) (width / ratio + 0.5f);
             }
         }
-        super.onMeasure(MeasureSpec.makeMeasureSpec(width, MeasureSpec.EXACTLY), MeasureSpec.makeMeasureSpec(height, MeasureSpec.EXACTLY));
+        super.onMeasure(MeasureSpec.makeMeasureSpec(width, MeasureSpec.EXACTLY),
+            MeasureSpec.makeMeasureSpec(height, MeasureSpec.EXACTLY));
     }
 
-
     private boolean flashLightAvailable() {
-        return mCamera != null && mPreviewing && mSurfaceCreated && getContext().getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH);
+        return mCamera != null && mPreviewing && mSurfaceCreated && getContext().getPackageManager()
+            .hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH);
     }
 
     private Runnable doAutoFocus = new Runnable() {
@@ -142,11 +158,46 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
     Camera.AutoFocusCallback autoFocusCB = new Camera.AutoFocusCallback() {
         public void onAutoFocus(boolean success, Camera camera) {
             if (success) {
-                postDelayed(doAutoFocus, 2000);
+                postDelayed(doAutoFocus, getAutoFocusSuccessDelay());
             } else {
-                postDelayed(doAutoFocus, 500);
+                postDelayed(doAutoFocus, getAutoFocusFailureDelay());
             }
         }
     };
 
+    /**
+     * 自动对焦成功后，再次对焦的延迟
+     *
+     * @return
+     */
+    public long getAutoFocusSuccessDelay() {
+        return mAutoFocusSuccessDelay;
+    }
+
+    /**
+     * 自动对焦成功后，再次对焦的延迟
+     *
+     * @param autoFocusSuccessDelay
+     */
+    public void setAutoFocusSuccessDelay(long autoFocusSuccessDelay) {
+        mAutoFocusSuccessDelay = autoFocusSuccessDelay;
+    }
+
+    /**
+     * 自动对焦失败后，再次对焦的延迟
+     *
+     * @return
+     */
+    public long getAutoFocusFailureDelay() {
+        return mAutoFocusFailureDelay;
+    }
+
+    /**
+     * 自动对焦失败后，再次对焦的延迟
+     *
+     * @param autoFocusFailureDelay
+     */
+    public void setAutoFocusFailureDelay(long autoFocusFailureDelay) {
+        mAutoFocusFailureDelay = autoFocusFailureDelay;
+    }
 }

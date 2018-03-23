@@ -8,7 +8,8 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.RelativeLayout;
 
-public abstract class QRCodeView extends RelativeLayout implements Camera.PreviewCallback, ProcessDataTask.Delegate {
+public abstract class QRCodeView extends RelativeLayout
+    implements Camera.PreviewCallback, ProcessDataTask.Delegate {
     protected Camera mCamera;
     protected CameraPreview mPreview;
     protected ScanBoxView mScanBoxView;
@@ -294,5 +295,23 @@ public abstract class QRCodeView extends RelativeLayout implements Camera.Previe
          * 处理打开相机出错
          */
         void onScanQRCodeOpenCameraError();
+    }
+
+    /**
+     * 自动对焦成功后，再次对焦的延迟
+     *
+     * @param autoFocusSuccessDelay
+     */
+    public void setAutoFocusSuccessDelay(long autoFocusSuccessDelay) {
+        mPreview.setAutoFocusSuccessDelay(autoFocusSuccessDelay);
+    }
+
+    /**
+     * 自动对焦失败后，再次对焦的延迟
+     *
+     * @param autoFocusFailureDelay
+     */
+    public void setAutoFocusFailureDelay(long autoFocusFailureDelay) {
+        mPreview.setAutoFocusSuccessDelay(autoFocusFailureDelay);
     }
 }

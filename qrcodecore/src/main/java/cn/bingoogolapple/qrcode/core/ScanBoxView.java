@@ -70,7 +70,6 @@ public class ScanBoxView extends View {
     private Bitmap mOriginQRCodeGridScanLineBitmap;
     private Bitmap mOriginBarCodeGridScanLineBitmap;
 
-
     private float mHalfCornerSize;
     private StaticLayout mTipTextSl;
     private int mTipBackgroundRadius;
@@ -151,7 +150,8 @@ public class ScanBoxView extends View {
         } else if (attr == R.styleable.QRCodeView_qrcv_scanLineMargin) {
             mScanLineMargin = typedArray.getDimensionPixelSize(attr, mScanLineMargin);
         } else if (attr == R.styleable.QRCodeView_qrcv_isShowDefaultScanLineDrawable) {
-            mIsShowDefaultScanLineDrawable = typedArray.getBoolean(attr, mIsShowDefaultScanLineDrawable);
+            mIsShowDefaultScanLineDrawable =
+                typedArray.getBoolean(attr, mIsShowDefaultScanLineDrawable);
         } else if (attr == R.styleable.QRCodeView_qrcv_customScanLineDrawable) {
             mCustomScanLineDrawable = typedArray.getDrawable(attr);
         } else if (attr == R.styleable.QRCodeView_qrcv_borderSize) {
@@ -189,7 +189,8 @@ public class ScanBoxView extends View {
         } else if (attr == R.styleable.QRCodeView_qrcv_isScanLineReverse) {
             mIsScanLineReverse = typedArray.getBoolean(attr, mIsScanLineReverse);
         } else if (attr == R.styleable.QRCodeView_qrcv_isShowDefaultGridScanLineDrawable) {
-            mIsShowDefaultGridScanLineDrawable = typedArray.getBoolean(attr, mIsShowDefaultGridScanLineDrawable);
+            mIsShowDefaultGridScanLineDrawable =
+                typedArray.getBoolean(attr, mIsShowDefaultGridScanLineDrawable);
         } else if (attr == R.styleable.QRCodeView_qrcv_customGridScanLineDrawable) {
             mCustomGridScanLineDrawable = typedArray.getDrawable(attr);
         } else if (attr == R.styleable.QRCodeView_qrcv_isOnlyDecodeScanBoxArea) {
@@ -199,25 +200,33 @@ public class ScanBoxView extends View {
 
     private void afterInitCustomAttrs() {
         if (mCustomGridScanLineDrawable != null) {
-            mOriginQRCodeGridScanLineBitmap = ((BitmapDrawable) mCustomGridScanLineDrawable).getBitmap();
+            mOriginQRCodeGridScanLineBitmap =
+                ((BitmapDrawable) mCustomGridScanLineDrawable).getBitmap();
         }
         if (mOriginQRCodeGridScanLineBitmap == null) {
-            mOriginQRCodeGridScanLineBitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.qrcode_default_grid_scan_line);
-            mOriginQRCodeGridScanLineBitmap = BGAQRCodeUtil.makeTintBitmap(mOriginQRCodeGridScanLineBitmap, mScanLineColor);
+            mOriginQRCodeGridScanLineBitmap = BitmapFactory.decodeResource(getResources(),
+                R.mipmap.qrcode_default_grid_scan_line);
+            mOriginQRCodeGridScanLineBitmap =
+                BGAQRCodeUtil.makeTintBitmap(mOriginQRCodeGridScanLineBitmap, mScanLineColor);
         }
-        mOriginBarCodeGridScanLineBitmap = BGAQRCodeUtil.adjustPhotoRotation(mOriginQRCodeGridScanLineBitmap, 90);
-        mOriginBarCodeGridScanLineBitmap = BGAQRCodeUtil.adjustPhotoRotation(mOriginBarCodeGridScanLineBitmap, 90);
-        mOriginBarCodeGridScanLineBitmap = BGAQRCodeUtil.adjustPhotoRotation(mOriginBarCodeGridScanLineBitmap, 90);
-
+        mOriginBarCodeGridScanLineBitmap =
+            BGAQRCodeUtil.adjustPhotoRotation(mOriginQRCodeGridScanLineBitmap, 90);
+        mOriginBarCodeGridScanLineBitmap =
+            BGAQRCodeUtil.adjustPhotoRotation(mOriginBarCodeGridScanLineBitmap, 90);
+        mOriginBarCodeGridScanLineBitmap =
+            BGAQRCodeUtil.adjustPhotoRotation(mOriginBarCodeGridScanLineBitmap, 90);
 
         if (mCustomScanLineDrawable != null) {
             mOriginQRCodeScanLineBitmap = ((BitmapDrawable) mCustomScanLineDrawable).getBitmap();
         }
         if (mOriginQRCodeScanLineBitmap == null) {
-            mOriginQRCodeScanLineBitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.qrcode_default_scan_line);
-            mOriginQRCodeScanLineBitmap = BGAQRCodeUtil.makeTintBitmap(mOriginQRCodeScanLineBitmap, mScanLineColor);
+            mOriginQRCodeScanLineBitmap =
+                BitmapFactory.decodeResource(getResources(), R.mipmap.qrcode_default_scan_line);
+            mOriginQRCodeScanLineBitmap =
+                BGAQRCodeUtil.makeTintBitmap(mOriginQRCodeScanLineBitmap, mScanLineColor);
         }
-        mOriginBarCodeScanLineBitmap = BGAQRCodeUtil.adjustPhotoRotation(mOriginQRCodeScanLineBitmap, 90);
+        mOriginBarCodeScanLineBitmap =
+            BGAQRCodeUtil.adjustPhotoRotation(mOriginQRCodeScanLineBitmap, 90);
 
         mTopOffset += mToolbarHeight;
         mHalfCornerSize = 1.0f * mCornerSize / 2;
@@ -251,7 +260,6 @@ public class ScanBoxView extends View {
 
         // 移动扫描线的位置
         moveScanLine();
-
     }
 
     /**
@@ -267,8 +275,10 @@ public class ScanBoxView extends View {
             mPaint.setStyle(Paint.Style.FILL);
             mPaint.setColor(mMaskColor);
             canvas.drawRect(0, 0, width, mFramingRect.top, mPaint);
-            canvas.drawRect(0, mFramingRect.top, mFramingRect.left, mFramingRect.bottom + 1, mPaint);
-            canvas.drawRect(mFramingRect.right + 1, mFramingRect.top, width, mFramingRect.bottom + 1, mPaint);
+            canvas.drawRect(0, mFramingRect.top, mFramingRect.left, mFramingRect.bottom + 1,
+                mPaint);
+            canvas.drawRect(mFramingRect.right + 1, mFramingRect.top, width,
+                mFramingRect.bottom + 1, mPaint);
             canvas.drawRect(0, mFramingRect.bottom + 1, width, height, mPaint);
         }
     }
@@ -297,15 +307,23 @@ public class ScanBoxView extends View {
             mPaint.setStyle(Paint.Style.STROKE);
             mPaint.setColor(mCornerColor);
             mPaint.setStrokeWidth(mCornerSize);
-            canvas.drawLine(mFramingRect.left - mHalfCornerSize, mFramingRect.top, mFramingRect.left - mHalfCornerSize + mCornerLength, mFramingRect.top, mPaint);
-            canvas.drawLine(mFramingRect.left, mFramingRect.top - mHalfCornerSize, mFramingRect.left, mFramingRect.top - mHalfCornerSize + mCornerLength, mPaint);
-            canvas.drawLine(mFramingRect.right + mHalfCornerSize, mFramingRect.top, mFramingRect.right + mHalfCornerSize - mCornerLength, mFramingRect.top, mPaint);
-            canvas.drawLine(mFramingRect.right, mFramingRect.top - mHalfCornerSize, mFramingRect.right, mFramingRect.top - mHalfCornerSize + mCornerLength, mPaint);
+            canvas.drawLine(mFramingRect.left - mHalfCornerSize, mFramingRect.top,
+                mFramingRect.left - mHalfCornerSize + mCornerLength, mFramingRect.top, mPaint);
+            canvas.drawLine(mFramingRect.left, mFramingRect.top - mHalfCornerSize,
+                mFramingRect.left, mFramingRect.top - mHalfCornerSize + mCornerLength, mPaint);
+            canvas.drawLine(mFramingRect.right + mHalfCornerSize, mFramingRect.top,
+                mFramingRect.right + mHalfCornerSize - mCornerLength, mFramingRect.top, mPaint);
+            canvas.drawLine(mFramingRect.right, mFramingRect.top - mHalfCornerSize,
+                mFramingRect.right, mFramingRect.top - mHalfCornerSize + mCornerLength, mPaint);
 
-            canvas.drawLine(mFramingRect.left - mHalfCornerSize, mFramingRect.bottom, mFramingRect.left - mHalfCornerSize + mCornerLength, mFramingRect.bottom, mPaint);
-            canvas.drawLine(mFramingRect.left, mFramingRect.bottom + mHalfCornerSize, mFramingRect.left, mFramingRect.bottom + mHalfCornerSize - mCornerLength, mPaint);
-            canvas.drawLine(mFramingRect.right + mHalfCornerSize, mFramingRect.bottom, mFramingRect.right + mHalfCornerSize - mCornerLength, mFramingRect.bottom, mPaint);
-            canvas.drawLine(mFramingRect.right, mFramingRect.bottom + mHalfCornerSize, mFramingRect.right, mFramingRect.bottom + mHalfCornerSize - mCornerLength, mPaint);
+            canvas.drawLine(mFramingRect.left - mHalfCornerSize, mFramingRect.bottom,
+                mFramingRect.left - mHalfCornerSize + mCornerLength, mFramingRect.bottom, mPaint);
+            canvas.drawLine(mFramingRect.left, mFramingRect.bottom + mHalfCornerSize,
+                mFramingRect.left, mFramingRect.bottom + mHalfCornerSize - mCornerLength, mPaint);
+            canvas.drawLine(mFramingRect.right + mHalfCornerSize, mFramingRect.bottom,
+                mFramingRect.right + mHalfCornerSize - mCornerLength, mFramingRect.bottom, mPaint);
+            canvas.drawLine(mFramingRect.right, mFramingRect.bottom + mHalfCornerSize,
+                mFramingRect.right, mFramingRect.bottom + mHalfCornerSize - mCornerLength, mPaint);
         }
     }
 
@@ -317,9 +335,13 @@ public class ScanBoxView extends View {
     private void drawScanLine(Canvas canvas) {
         if (mIsBarcode) {
             if (mGridScanLineBitmap != null) {
-                RectF dstGridRectF = new RectF(mFramingRect.left + mHalfCornerSize + 0.5f, mFramingRect.top + mHalfCornerSize + mScanLineMargin, mGridScanLineRight, mFramingRect.bottom - mHalfCornerSize - mScanLineMargin);
+                RectF dstGridRectF = new RectF(mFramingRect.left + mHalfCornerSize + 0.5f,
+                    mFramingRect.top + mHalfCornerSize + mScanLineMargin, mGridScanLineRight,
+                    mFramingRect.bottom - mHalfCornerSize - mScanLineMargin);
 
-                Rect srcGridRect = new Rect((int) (mGridScanLineBitmap.getWidth() - dstGridRectF.width()), 0, mGridScanLineBitmap.getWidth(), mGridScanLineBitmap.getHeight());
+                Rect srcGridRect =
+                    new Rect((int) (mGridScanLineBitmap.getWidth() - dstGridRectF.width()), 0,
+                        mGridScanLineBitmap.getWidth(), mGridScanLineBitmap.getHeight());
 
                 if (srcGridRect.left < 0) {
                     srcGridRect.left = 0;
@@ -328,18 +350,29 @@ public class ScanBoxView extends View {
 
                 canvas.drawBitmap(mGridScanLineBitmap, srcGridRect, dstGridRectF, mPaint);
             } else if (mScanLineBitmap != null) {
-                RectF lineRect = new RectF(mScanLineLeft, mFramingRect.top + mHalfCornerSize + mScanLineMargin, mScanLineLeft + mScanLineBitmap.getWidth(), mFramingRect.bottom - mHalfCornerSize - mScanLineMargin);
+                RectF lineRect =
+                    new RectF(mScanLineLeft, mFramingRect.top + mHalfCornerSize + mScanLineMargin,
+                        mScanLineLeft + mScanLineBitmap.getWidth(),
+                        mFramingRect.bottom - mHalfCornerSize - mScanLineMargin);
                 canvas.drawBitmap(mScanLineBitmap, null, lineRect, mPaint);
             } else {
                 mPaint.setStyle(Paint.Style.FILL);
                 mPaint.setColor(mScanLineColor);
-                canvas.drawRect(mScanLineLeft, mFramingRect.top + mHalfCornerSize + mScanLineMargin, mScanLineLeft + mScanLineSize, mFramingRect.bottom - mHalfCornerSize - mScanLineMargin, mPaint);
+                canvas.drawRect(mScanLineLeft, mFramingRect.top + mHalfCornerSize + mScanLineMargin,
+                    mScanLineLeft + mScanLineSize,
+                    mFramingRect.bottom - mHalfCornerSize - mScanLineMargin, mPaint);
             }
         } else {
             if (mGridScanLineBitmap != null) {
-                RectF dstGridRectF = new RectF(mFramingRect.left + mHalfCornerSize + mScanLineMargin, mFramingRect.top + mHalfCornerSize + 0.5f, mFramingRect.right - mHalfCornerSize - mScanLineMargin, mGridScanLineBottom);
+                RectF dstGridRectF =
+                    new RectF(mFramingRect.left + mHalfCornerSize + mScanLineMargin,
+                        mFramingRect.top + mHalfCornerSize + 0.5f,
+                        mFramingRect.right - mHalfCornerSize - mScanLineMargin,
+                        mGridScanLineBottom);
 
-                Rect srcRect = new Rect(0, (int) (mGridScanLineBitmap.getHeight() - dstGridRectF.height()), mGridScanLineBitmap.getWidth(), mGridScanLineBitmap.getHeight());
+                Rect srcRect =
+                    new Rect(0, (int) (mGridScanLineBitmap.getHeight() - dstGridRectF.height()),
+                        mGridScanLineBitmap.getWidth(), mGridScanLineBitmap.getHeight());
 
                 if (srcRect.top < 0) {
                     srcRect.top = 0;
@@ -348,12 +381,17 @@ public class ScanBoxView extends View {
 
                 canvas.drawBitmap(mGridScanLineBitmap, srcRect, dstGridRectF, mPaint);
             } else if (mScanLineBitmap != null) {
-                RectF lineRect = new RectF(mFramingRect.left + mHalfCornerSize + mScanLineMargin, mScanLineTop, mFramingRect.right - mHalfCornerSize - mScanLineMargin, mScanLineTop + mScanLineBitmap.getHeight());
+                RectF lineRect =
+                    new RectF(mFramingRect.left + mHalfCornerSize + mScanLineMargin, mScanLineTop,
+                        mFramingRect.right - mHalfCornerSize - mScanLineMargin,
+                        mScanLineTop + mScanLineBitmap.getHeight());
                 canvas.drawBitmap(mScanLineBitmap, null, lineRect, mPaint);
             } else {
                 mPaint.setStyle(Paint.Style.FILL);
                 mPaint.setColor(mScanLineColor);
-                canvas.drawRect(mFramingRect.left + mHalfCornerSize + mScanLineMargin, mScanLineTop, mFramingRect.right - mHalfCornerSize - mScanLineMargin, mScanLineTop + mScanLineSize, mPaint);
+                canvas.drawRect(mFramingRect.left + mHalfCornerSize + mScanLineMargin, mScanLineTop,
+                    mFramingRect.right - mHalfCornerSize - mScanLineMargin,
+                    mScanLineTop + mScanLineSize, mPaint);
             }
         }
     }
@@ -376,9 +414,21 @@ public class ScanBoxView extends View {
                     Rect tipRect = new Rect();
                     mTipPaint.getTextBounds(mTipText, 0, mTipText.length(), tipRect);
                     float left = (canvas.getWidth() - tipRect.width()) / 2 - mTipBackgroundRadius;
-                    canvas.drawRoundRect(new RectF(left, mFramingRect.bottom + mTipTextMargin - mTipBackgroundRadius, left + tipRect.width() + 2 * mTipBackgroundRadius, mFramingRect.bottom + mTipTextMargin + mTipTextSl.getHeight() + mTipBackgroundRadius), mTipBackgroundRadius, mTipBackgroundRadius, mPaint);
+                    canvas.drawRoundRect(
+                        new RectF(left, mFramingRect.bottom + mTipTextMargin - mTipBackgroundRadius,
+                            left + tipRect.width() + 2 * mTipBackgroundRadius, mFramingRect.bottom
+                            + mTipTextMargin
+                            + mTipTextSl.getHeight()
+                            + mTipBackgroundRadius), mTipBackgroundRadius, mTipBackgroundRadius,
+                        mPaint);
                 } else {
-                    canvas.drawRoundRect(new RectF(mFramingRect.left, mFramingRect.bottom + mTipTextMargin - mTipBackgroundRadius, mFramingRect.right, mFramingRect.bottom + mTipTextMargin + mTipTextSl.getHeight() + mTipBackgroundRadius), mTipBackgroundRadius, mTipBackgroundRadius, mPaint);
+                    canvas.drawRoundRect(new RectF(mFramingRect.left,
+                            mFramingRect.bottom + mTipTextMargin - mTipBackgroundRadius,
+                            mFramingRect.right, mFramingRect.bottom
+                            + mTipTextMargin
+                            + mTipTextSl.getHeight()
+                            + mTipBackgroundRadius), mTipBackgroundRadius, mTipBackgroundRadius,
+                        mPaint);
                 }
             }
 
@@ -386,7 +436,8 @@ public class ScanBoxView extends View {
             if (mIsShowTipTextAsSingleLine) {
                 canvas.translate(0, mFramingRect.bottom + mTipTextMargin);
             } else {
-                canvas.translate(mFramingRect.left + mTipBackgroundRadius, mFramingRect.bottom + mTipTextMargin);
+                canvas.translate(mFramingRect.left + mTipBackgroundRadius,
+                    mFramingRect.bottom + mTipTextMargin);
             }
             mTipTextSl.draw(canvas);
             canvas.restore();
@@ -399,9 +450,19 @@ public class ScanBoxView extends View {
                     Rect tipRect = new Rect();
                     mTipPaint.getTextBounds(mTipText, 0, mTipText.length(), tipRect);
                     float left = (canvas.getWidth() - tipRect.width()) / 2 - mTipBackgroundRadius;
-                    canvas.drawRoundRect(new RectF(left, mFramingRect.top - mTipTextMargin - mTipTextSl.getHeight() - mTipBackgroundRadius, left + tipRect.width() + 2 * mTipBackgroundRadius, mFramingRect.top - mTipTextMargin + mTipBackgroundRadius), mTipBackgroundRadius, mTipBackgroundRadius, mPaint);
+                    canvas.drawRoundRect(new RectF(left, mFramingRect.top
+                            - mTipTextMargin
+                            - mTipTextSl.getHeight()
+                            - mTipBackgroundRadius, left + tipRect.width() + 2 * mTipBackgroundRadius,
+                            mFramingRect.top - mTipTextMargin + mTipBackgroundRadius),
+                        mTipBackgroundRadius, mTipBackgroundRadius, mPaint);
                 } else {
-                    canvas.drawRoundRect(new RectF(mFramingRect.left, mFramingRect.top - mTipTextMargin - mTipTextSl.getHeight() - mTipBackgroundRadius, mFramingRect.right, mFramingRect.top - mTipTextMargin + mTipBackgroundRadius), mTipBackgroundRadius, mTipBackgroundRadius, mPaint);
+                    canvas.drawRoundRect(new RectF(mFramingRect.left, mFramingRect.top
+                            - mTipTextMargin
+                            - mTipTextSl.getHeight()
+                            - mTipBackgroundRadius, mFramingRect.right,
+                            mFramingRect.top - mTipTextMargin + mTipBackgroundRadius),
+                        mTipBackgroundRadius, mTipBackgroundRadius, mPaint);
                 }
             }
 
@@ -409,7 +470,8 @@ public class ScanBoxView extends View {
             if (mIsShowTipTextAsSingleLine) {
                 canvas.translate(0, mFramingRect.top - mTipTextMargin - mTipTextSl.getHeight());
             } else {
-                canvas.translate(mFramingRect.left + mTipBackgroundRadius, mFramingRect.top - mTipTextMargin - mTipTextSl.getHeight());
+                canvas.translate(mFramingRect.left + mTipBackgroundRadius,
+                    mFramingRect.top - mTipTextMargin - mTipTextSl.getHeight());
             }
             mTipTextSl.draw(canvas);
             canvas.restore();
@@ -430,7 +492,8 @@ public class ScanBoxView extends View {
                 }
 
                 if (mIsScanLineReverse) {
-                    if (mScanLineLeft + scanLineSize > mFramingRect.right - mHalfCornerSize || mScanLineLeft < mFramingRect.left + mHalfCornerSize) {
+                    if (mScanLineLeft + scanLineSize > mFramingRect.right - mHalfCornerSize
+                        || mScanLineLeft < mFramingRect.left + mHalfCornerSize) {
                         mMoveStepDistance = -mMoveStepDistance;
                     }
                 } else {
@@ -455,7 +518,8 @@ public class ScanBoxView extends View {
                 }
 
                 if (mIsScanLineReverse) {
-                    if (mScanLineTop + scanLineSize > mFramingRect.bottom - mHalfCornerSize || mScanLineTop < mFramingRect.top + mHalfCornerSize) {
+                    if (mScanLineTop + scanLineSize > mFramingRect.bottom - mHalfCornerSize
+                        || mScanLineTop < mFramingRect.top + mHalfCornerSize) {
                         mMoveStepDistance = -mMoveStepDistance;
                     }
                 } else {
@@ -470,9 +534,9 @@ public class ScanBoxView extends View {
                     mGridScanLineBottom = mFramingRect.top + mHalfCornerSize + 0.5f;
                 }
             }
-
         }
-        postInvalidateDelayed(mAnimDelayTime, mFramingRect.left, mFramingRect.top, mFramingRect.right, mFramingRect.bottom);
+        postInvalidateDelayed(mAnimDelayTime, mFramingRect.left, mFramingRect.top,
+            mFramingRect.right, mFramingRect.bottom);
     }
 
     @Override
@@ -483,7 +547,8 @@ public class ScanBoxView extends View {
 
     private void calFramingRect() {
         int leftOffset = (getWidth() - mRectWidth) / 2;
-        mFramingRect = new Rect(leftOffset, mTopOffset, leftOffset + mRectWidth, mTopOffset + mRectHeight);
+        mFramingRect =
+            new Rect(leftOffset, mTopOffset, leftOffset + mRectWidth, mTopOffset + mRectHeight);
 
         if (mIsBarcode) {
             mGridScanLineRight = mScanLineLeft = mFramingRect.left + mHalfCornerSize + 0.5f;
@@ -496,10 +561,18 @@ public class ScanBoxView extends View {
         if (mIsOnlyDecodeScanBoxArea) {
             Rect rect = new Rect(mFramingRect);
             float ratio = 1.0f * previewHeight / getMeasuredHeight();
-            rect.left = (int) (rect.left * ratio);
-            rect.right = (int) (rect.right * ratio);
-            rect.top = (int) (rect.top * ratio);
-            rect.bottom = (int) (rect.bottom * ratio);
+            
+            float halfWidth = (rect.right - rect.left) / 2f;
+            float halfHeight = (rect.bottom - rect.top) / 2f;
+            float centerX = rect.left + halfWidth;
+            float centerY = rect.top + halfHeight;
+            float newHalfWidth = halfWidth * ratio;
+            float newHalfHeight = halfHeight * ratio;
+
+            rect.left = (int) (centerX - newHalfWidth);
+            rect.right = (int) (centerX + newHalfWidth);
+            rect.top = (int) (centerY - newHalfHeight);
+            rect.bottom = (int) (centerY + newHalfHeight);
             return rect;
         } else {
             return null;
@@ -535,9 +608,13 @@ public class ScanBoxView extends View {
 
         if (!TextUtils.isEmpty(mTipText)) {
             if (mIsShowTipTextAsSingleLine) {
-                mTipTextSl = new StaticLayout(mTipText, mTipPaint, BGAQRCodeUtil.getScreenResolution(getContext()).x, Layout.Alignment.ALIGN_CENTER, 1.0f, 0, true);
+                mTipTextSl = new StaticLayout(mTipText, mTipPaint,
+                    BGAQRCodeUtil.getScreenResolution(getContext()).x,
+                    Layout.Alignment.ALIGN_CENTER, 1.0f, 0, true);
             } else {
-                mTipTextSl = new StaticLayout(mTipText, mTipPaint, mRectWidth - 2 * mTipBackgroundRadius, Layout.Alignment.ALIGN_CENTER, 1.0f, 0, true);
+                mTipTextSl =
+                    new StaticLayout(mTipText, mTipPaint, mRectWidth - 2 * mTipBackgroundRadius,
+                        Layout.Alignment.ALIGN_CENTER, 1.0f, 0, true);
             }
         }
 
